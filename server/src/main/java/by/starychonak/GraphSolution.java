@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GraphDTO {
-    public int[][] graph;
-    public int source;
-    public int target;
+public class GraphSolution {
+    private int maxFlow;
 }

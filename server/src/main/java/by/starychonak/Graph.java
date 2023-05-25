@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Graph {
-    public int[][] graph;
-    public int source;
-    public int sink;
+    private int[][] graph;
+    private int source;
+    private int target;
 }

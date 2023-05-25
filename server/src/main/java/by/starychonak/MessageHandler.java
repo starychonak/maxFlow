@@ -1,5 +1,7 @@
 package by.starychonak;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,7 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 public class MessageHandler extends Thread {
 
-    private Socket clientSocket;
+    private final Socket clientSocket;
+    private final ObjectMapper MAPPER = new ObjectMapper();
 
     public MessageHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -25,12 +28,22 @@ public class MessageHandler extends Thread {
 
             System.out.println("Получен запрос от клиента: " + requestData);
 
-            String responseData = "Ответ на ваш запрос";
-            outputStream.write(responseData.getBytes(StandardCharsets.UTF_8));
+            Graph graph = MAPPER.readValue(requestData, Graph.class);
+            String response = MAPPER.writeValueAsString(resolve(graph));
+
+            outputStream.write(response.getBytes(StandardCharsets.UTF_8));
 
         } catch (IOException e) {
             throw new RuntimeException("Ошибка чтения информации из запроса");
         }
+    }
+
+    private GraphSolution resolve(Graph graph) {
+        int verticesNumber = graph.getGraph().length;
+
+        MaxFlow maxFlow = new MaxFlow(verticesNumber, graph.getSource(), graph.getTarget(), new int[verticesNumber], graph.getGraph());
+        int flow = maxFlow.resolve();
+        return new GraphSolution(flow);
     }
 
 }

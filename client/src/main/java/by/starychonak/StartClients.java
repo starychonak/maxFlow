@@ -7,7 +7,7 @@ public class StartClients {
 
     public static void main(String[] args) {
         List<Thread> threads = new ArrayList<>();
-        for (long i = 0; i < 5; i++) {
+        for (long i = 0; i < 1; i++) {
             Thread thread = new Client();
             thread.start();
             threads.add(thread);
@@ -23,7 +23,7 @@ public class StartClients {
 
         for (Thread thread : threads) {
             if (thread instanceof Client result) {
-                System.out.println("Результат потока: " + result.getResponseData());
+                result.printResponse();
             }
         }
 

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class MaxFlow {
 
-    private int verticesNumber = 6;
+    private int verticesNumber;
     private int source;
     private int target;
     private int path[];
